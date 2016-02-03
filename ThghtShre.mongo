@@ -1,0 +1,4 @@
+
+
+// Query 1
+db.thot.aggregate({$group: {"_id":"$status", "messages":{$sum:1}}}, {$sort: {"messages":-1}}, {$limit:1})
