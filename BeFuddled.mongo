@@ -1,0 +1,15 @@
+// CSC 369. Lab 5.
+// Yang Pan
+// BeFuddled dataset
+
+// Query 1
+db.fudd.aggregate({$project: {"user":1, "gameStart":{$cond:[{$eq:["$action.actionType","GameStart"]},1,0]}, "gameWin":{$cond:[{$eq:["$action.gameStatus","Win"]},1,0]}, "gameLoss":{$cond:[{$eq:["$action.gameStatus","Loss"]},1,0]}}}, {$group: {"_id":"$user", "totalGame":{"$sum":"$gameStart"}, "won":{"$sum":"$gameWin"}, "lost":{"$sum":"$gameLoss"}}})
+
+// Query 2
+db.fudd.aggregate({$sort: {"action.pointsAdded":-1}}, {$limit: 5})
+
+//Query 3
+db.fudd.aggregate({$sort: {"action.pointsAdded":-1}}, {$limit:5}, {$project: {"_id":0, "game":1, "user":1, "score":"$action.points"}})
+
+// Query 4
+
